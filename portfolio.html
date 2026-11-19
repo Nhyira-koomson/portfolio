@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of Benjamin Nhyira Koomson, Telecommunication Engineering student and Full Stack Developer.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Benjamin Nhyira Koomson | Full Stack Developer</title>
+  <link rel="stylesheet" href="./CSS/style.css">
+  
+</head>
+
+<body>
+  <!-- EDIT YOUR PERSONAL DETAILS IN THE CONFIG OBJECT BELOW. -->
+  <script>
+    "use strict";
+
+    const CONFIG = {
+      name: "Benjamin Nhyira Koomson",
+      role: "Telecommunication Engineering Student & Full Stack Developer",
+      location: "Accra, Ghana",
+      about: "I'm Benjamin Nhyira Koomson, a telecommunication engineering student and full stack developer from Ghana. I love turning ideas into real websites that people can actually use - from design to database.",
+
+      // Add a local image filename, for example: "me.jpg"
+      photo: "",
+
+      skills: [
+        "React",
+        "Node.js",
+        "Python",
+        "TypeScript",
+        "Tailwind CSS",
+        "MongoDB"
+      ],
+
+      projects: [
+        {
+          title: "E-Commerce Platform",
+          desc: "Full-stack online store with payment, user authentication, and an admin dashboard."
+        },
+        {
+          title: "Task Manager App",
+          desc: "Collaborative task app with real-time updates and drag-and-drop."
+        },
+        {
+          title: "AI Chat Dashboard",
+          desc: "AI-powered chat interface with analytics and real-time messaging."
+        }
+      ],
+
+      whatsapp: "https://wa.me/233551274371?text=Hi%20Benjamin%2C%20I%20saw%20your%20portfolio%20and%20want%20to%20work%20with%20you",
+      email: "benjaminnhyirakoomson@gmail.com",
+      github: "https://github.com/Nhyira-koomson",
+
+      // Replace this with your actual LinkedIn profile URL.
+      linkedin: "https://linkedin.com/"
+    };
+  </script>
+
+  <nav class="glass" aria-label="Main navigation">
+    <b>BNK • <span id="navName"></span></b>
+
+    <div>
+      <a class="hide-m" href="#home">Home</a>
+      <a class="hide-m" href="#about">About</a>
+      <a class="hide-m" href="#skills">Skills</a>
+      <a class="hide-m" href="#projects">Projects</a>
+      <button class="icon-btn" id="themeBtn" type="button"
+        aria-label="Switch to dark theme" aria-pressed="false">🌙</button>
+      <a class="btn" href="#contact">Hire Me</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="hero" id="home">
+      <div class="glass hero-card">
+        <span class="tag">👋 HELLO, I'M</span>
+        <h1 id="heroName"></h1>
+        <h1><span id="heroRole"></span></h1>
+        <p id="heroAbout"></p>
+
+        <a class="btn" href="#projects">View My Work →</a>
+        &nbsp;
+        <a class="btn-outline" href="#contact">Contact Me</a>
+
+        <div class="stats" id="stats" aria-label="Portfolio statistics"></div>
+      </div>
+
+      <div class="glass photo-card">
+        <div class="photo-circle" id="photoBox"><img src="img1.jpg" alt=""></div>
+        <h3 style="margin-top:15px" id="photoName"></h3>
+        <p id="photoRole"></p>
+        <p style="font-size:13px;color:#64748B" id="photoLoc"></p>
+      </div>
+    </section>
+
+    <section class="glass section" id="about">
+      <h2>About Me</h2>
+      <p class="sub" id="aboutText"></p>
+    </section>
+
+    <section class="glass section" id="skills">
+      <h2>Technologies I Work With</h2>
+      <p class="sub">Skills &amp; Expertise</p>
+      <div class="grid" id="skillsGrid"></div>
+    </section>
+
+    <section class="glass section" id="projects">
+      <h2>Recent Work</h2>
+      <p class="sub">Featured Projects</p>
+      <div class="grid" id="projectsGrid"></div>
+    </section>
+
+    <section class="glass section" id="contact" style="text-align:center">
+      <h2>Let's Work Together</h2>
+      <p class="sub">I'm currently open to internships and freelance opportunities.</p>
+
+      <a class="btn" id="whatsappBtn" href="#">WhatsApp Me</a>
+      &nbsp;
+      <a class="btn-outline" id="emailBtn" href="#">Email Me</a>
+
+      <br><br>
+
+      <a id="githubBtn" href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+      •
+      <a id="linkedinBtn" href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> <span id="footerName"></span>
+    • Telecommunication Engineering Student &amp; Full Stack Developer
+  </footer>
+
+  <script>
+    "use strict";
+
+    // Set plain text safely; do not interpret configuration values as HTML.
+    function setText(elementId, value) {
+      document.getElementById(elementId).textContent = String(value ?? "");
+    }
+
+    // Accept only HTTP(S) URLs for external links.
+    function setSafeLink(elementId, value, allowedProtocols = ["https:", "http:"]) {
+      const element = document.getElementById(elementId);
+
+      try {
+        const url = new URL(value);
+        if (!allowedProtocols.includes(url.protocol)) {
+          element.removeAttribute("href");
+          return;
+        }
+        element.href = url.href;
+      } catch {
+        element.removeAttribute("href");
+      }
+    }
+
+    function createCard(title, description) {
+      const card = document.createElement("article");
+      card.className = "glass card";
+
+      const heading = document.createElement("h3");
+      heading.textContent = String(title ?? "");
+
+      const paragraph = document.createElement("p");
+      paragraph.textContent = String(description ?? "");
+
+      card.append(heading, paragraph);
+      return card;
+    }
+
+    function renderSkills() {
+      const grid = document.getElementById("skillsGrid");
+      grid.replaceChildren();
+
+      CONFIG.skills.forEach(skill => {
+        grid.appendChild(createCard(skill, `${skill} Development`));
+      });
+    }
+
+    function renderProjects() {
+      const grid = document.getElementById("projectsGrid");
+      grid.replaceChildren();
+
+      CONFIG.projects.forEach(project => {
+        grid.appendChild(createCard(project.title, project.desc));
+      });
+    }
+
+    function renderStats() {
+      const stats = [
+        ["3+ Years", "Coding"],
+        ["10+ Projects", "Completed"],
+        ["Open Source", "Contributor"]
+      ];
+
+      const container = document.getElementById("stats");
+      container.replaceChildren();
+
+      stats.forEach(([value, label]) => {
+        const card = document.createElement("div");
+        card.className = "glass stat";
+
+        const strong = document.createElement("b");
+        strong.style.color = "#0B5ED7";
+        strong.textContent = value;
+
+        const lineBreak = document.createElement("br");
+        const small = document.createElement("small");
+        small.textContent = label;
+
+        card.append(strong, lineBreak, small);
+        container.appendChild(card);
+      });
+    }
+
+    function renderPhoto() {
+      if (!CONFIG.photo) return;
+
+      // A local filename such as "me.jpg" is supported.
+      // Only HTTP(S) and same-origin relative image URLs are accepted.
+      try {
+        const photoUrl = new URL(CONFIG.photo, window.location.href);
+
+        if (!["http:", "https:"].includes(photoUrl.protocol)) return;
+
+        const image = document.createElement("img");
+        image.src = photoUrl.href;
+        image.alt = `${CONFIG.name} profile photo`;
+        image.referrerPolicy = "no-referrer";
+
+        image.addEventListener("error", () => {
+          document.getElementById("photoBox").textContent = "Photo unavailable";
+        }, { once: true });
+
+        document.getElementById("photoBox").replaceChildren(image);
+      } catch {
+        // Keep the photo placeholder if the configured path is invalid.
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.body.classList.toggle("dark");
+      const button = document.getElementById("themeBtn");
+
+      button.textContent = isDark ? "☀️" : "🌙";
+      button.setAttribute("aria-pressed", String(isDark));
+      button.setAttribute(
+        "aria-label",
+        isDark ? "Switch to light theme" : "Switch to dark theme"
+      );
+    }
+
+    function initializePortfolio() {
+      setText("navName", CONFIG.name);
+      setText("heroName", CONFIG.name);
+      setText("heroRole", CONFIG.role);
+      setText("heroAbout", CONFIG.about);
+      setText("aboutText", CONFIG.about);
+      setText("photoName", CONFIG.name);
+      setText("photoRole", CONFIG.role);
+      setText("photoLoc", CONFIG.location);
+      setText("footerName", CONFIG.name);
+      setText("year", new Date().getFullYear());
+
+      renderPhoto();
+      renderStats();
+      renderSkills();
+      renderProjects();
+
+      setSafeLink("whatsappBtn", CONFIG.whatsapp);
+      setSafeLink("githubBtn", CONFIG.github);
+      setSafeLink("linkedinBtn", CONFIG.linkedin);
+
+      // Email addresses are used only as mailto destinations.
+      const emailButton = document.getElementById("emailBtn");
+      const email = String(CONFIG.email ?? "").trim();
+
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        emailButton.href = `mailto:${encodeURIComponent(email)}`;
+      } else {
+        emailButton.removeAttribute("href");
+      }
+
+      document.getElementById("themeBtn")
+        .addEventListener("click", toggleTheme);
+    }
+
+    initializePortfolio();
+  </script>
+</body>
+</html>
